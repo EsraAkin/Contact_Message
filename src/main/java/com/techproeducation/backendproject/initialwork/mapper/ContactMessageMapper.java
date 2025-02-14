@@ -16,7 +16,7 @@ public class ContactMessageMapper {
         ContactMessage contactMessage=ContactMessage.builder()
                 .message(contactMessageRequest.getMessage())
                 .subject(contactMessageRequest.getSubject())
-                .eMail(contactMessageRequest.getEMail())
+                .email(contactMessageRequest.getEmail())
                 .localDateTime(contactMessageRequest.getLocalDateTime())
                 .name(contactMessageRequest.getName())
                 .build();
@@ -30,7 +30,7 @@ public ContactMessageResponse mapContactMessageToContactMessageResponse(ContactM
            .message(contactMessage.getMessage())
            .subject(contactMessage.getSubject())
            .name(contactMessage.getName())
-           .eMail(contactMessage.getEMail())
+           .eMail(contactMessage.getEmail())
            .localDateTime(contactMessage.getLocalDateTime())
            .build();
 

@@ -22,7 +22,7 @@ public class ContactMessageDTO {
 
     @Email
     @NotNull(message = "Please enter your eMail")
-    private String eMail;
+    private String email;
 
     @NotNull(message = "Please enter subject")
     private String subject;
