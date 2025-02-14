@@ -5,6 +5,7 @@ import com.techproeducation.backendproject.initialwork.payload.response.ContactM
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -15,4 +16,6 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
     List<ContactMessage> findBySubject(String subject);
 
     ContactMessage findByEmail(String email);
+
+    List<ContactMessage> findByLocalDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

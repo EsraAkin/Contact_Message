@@ -13,12 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -77,11 +80,21 @@ public class ContactMessageConrtoller {
         return ResponseEntity.ok(contactMessageService.getContactMessageByEmail(email));
     }
 
-
     //GET → Get contact messages by creation date
     //(parameters: {startDate, endDate})
     //(Find all contact messages between two dates, example: 01.01.2022 - 01.10.2023)
-    //
+
+    @GetMapping("date")
+    public ResponseEntity<List<ContactMessageResponse>> getContactMessagesTwoDateBetween(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate) {
+
+        List<ContactMessageResponse> contactMessages = contactMessageService.getContactMessageByDate(startDate, endDate);
+        return ResponseEntity.ok(contactMessages);
+    }
+
+
+
     //GET → Get contact messages by creation time
     //(parameters: {startTime, endTime})
     //(Find all contact messages between two times, example: 10:30 - 22:00)

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,5 +73,13 @@ public class ContactMessageService {
     public ContactMessageResponse getContactMessageByEmail(String email) {
         ContactMessage contactMessage=contactMessageRepository.findByEmail(email);
         return contactMessageMapper.mapContactMessageToContactMessageResponse(contactMessage);
+    }
+
+    public List<ContactMessageResponse> getContactMessageByDate(LocalDateTime startDate, LocalDateTime endDate) {
+        List<ContactMessage> contactMessages = contactMessageRepository.findByLocalDateTimeBetween(startDate, endDate);
+
+        return contactMessages.stream()
+                .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
+                .collect(Collectors.toList());
     }
 }
