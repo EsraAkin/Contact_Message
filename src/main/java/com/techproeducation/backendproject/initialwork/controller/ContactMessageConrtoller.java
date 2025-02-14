@@ -9,6 +9,10 @@ import com.techproeducation.backendproject.initialwork.payload.response.ContactM
 import com.techproeducation.backendproject.initialwork.payload.response.ResponseMessage;
 import com.techproeducation.backendproject.initialwork.service.ContactMessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -29,7 +33,7 @@ public class ContactMessageConrtoller {
     //(Date-time will be created by back-end)
     @PostMapping("/save")
     public ResponseEntity<ResponseMessage<ContactMessageResponse>> createContactMessage(
-            @Valid @RequestBody ContactMessageRequest contactMessageRequest){
+            @Valid @RequestBody ContactMessageRequest contactMessageRequest) {
         return ResponseEntity.ok(contactMessageService.createContactMessage(contactMessageRequest));
     }
 
@@ -40,21 +44,30 @@ public class ContactMessageConrtoller {
         return new ResponseEntity<>(getAllContactMessages, HttpStatus.OK);
     }
 
+    //GET → Get all contact messages by page
+    //(parameters: page, size, sort, type)
+
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<ContactMessage>> getAllStudents(@RequestParam("page") int pageNo, //kaçıncı sayfayı görmek istiyorum.
+                                                        @RequestParam("size") int size,   //her sayfada kaç kayıt olacak
+                                                        @RequestParam("sort") String properties, //hangi özelliğer göre sıralama yapılacak
+                                                        @RequestParam("direction") Sort.Direction direction) { //sıralamanın yönü için sabit değişken
+
+        //Tüm parametreleri aldım ve artık Pageable oluşturabilirim.
+        //findAll metodunun sayfa getirmesi için gerekli olan bilgileri
+        //pageable tipinde verebiliriz.
+
+        Pageable pageable = PageRequest.of(pageNo, size, Sort.by(direction, properties));
+
+        Page<ContactMessage> studentPage = contactMessageService.getAllContactMessagesByPage(pageable);
+        return new ResponseEntity<>(studentPage, HttpStatus.OK); //200
     }
 
 
 
 
 
-
-
-
-
-
-
-    //GET → Get all contact messages by page
-    //(parameters: page, size, sort, type)
-    //
     //GET → Search contact messages by subject
     //(contains/LIKE parameter: {subject})
     //
@@ -76,3 +89,4 @@ public class ContactMessageConrtoller {
     //PUT → Update a contact message
     //(Search by ID and update by body, only the properties that need to be updated will be sent)
 
+}

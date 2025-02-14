@@ -8,6 +8,8 @@ import com.techproeducation.backendproject.initialwork.payload.response.ContactM
 import com.techproeducation.backendproject.initialwork.payload.response.ResponseMessage;
 import com.techproeducation.backendproject.initialwork.repository.ContactMessage.ContactMessageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,12 @@ public class ContactMessageService {
         return getAllContactMessages.stream()
                 .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
                 .collect(Collectors.toList());
+    }
+
+
+
+    public Page<ContactMessage> getAllContactMessagesByPage(Pageable pageable) {
+        Page<ContactMessage> ContactMessagePage = contactMessageRepository.findAll(pageable);
+        return ContactMessagePage;
     }
 }
