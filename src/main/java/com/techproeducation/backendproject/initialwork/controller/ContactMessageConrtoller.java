@@ -110,11 +110,13 @@ public class ContactMessageConrtoller {
         return ResponseEntity.ok(messages);
     }
 
-
-
-
     //DELETE → Delete by ID (path)
-    //
+    @DeleteMapping("deleteContactMessageById/{id}")
+    public ResponseEntity<ContactMessageResponse>deletedById(@PathVariable Long id){
+        return ResponseEntity.ok( contactMessageService.deleteContactMessageById(id));
+    }
+
+
     //DELETE → Delete by ID (parameter: {id})
     //
     //PUT → Update a contact message

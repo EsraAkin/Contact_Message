@@ -26,6 +26,7 @@ public class ContactMessageService {
     private final UniqueValidator uniqueValidator;
     private final ContactMessageMapper contactMessageMapper;
     private final ContactMessageRepository contactMessageRepository;
+    private final MethodHelper methodHelper;
 
     public ResponseMessage<ContactMessageResponse> createContactMessage(ContactMessageRequest contactMessageRequest) {
 
@@ -102,5 +103,15 @@ public class ContactMessageService {
                     .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
                     .collect(Collectors.toList());
         }
+
+    public ContactMessageResponse deleteContactMessageById(Long id) {
+
+        ContactMessage contactMessage =methodHelper.isContactMessageExist(id);
+
+        contactMessageRepository.deleteById(id);
+
+        // Silinen mesajın bilgilerini response olarak döndür
+        return contactMessageMapper.mapContactMessageToContactMessageResponse(contactMessage);
     }
+}
 
