@@ -59,4 +59,13 @@ public class ContactMessageService {
         Page<ContactMessage> ContactMessagePage = contactMessageRepository.findAll(pageable);
         return ContactMessagePage;
     }
+
+    public List<ContactMessageResponse> getContactMessageBySubject(String subject) {
+        List<ContactMessage> messages = contactMessageRepository.findBySubject(subject);
+
+        // ContactMessage nesnelerini ContactMessageResponse nesnesine dönüştürüyoruz
+        return messages.stream()
+                .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
+                .collect(Collectors.toList());
+    }
 }

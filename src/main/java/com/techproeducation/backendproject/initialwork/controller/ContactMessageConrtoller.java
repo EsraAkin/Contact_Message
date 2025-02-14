@@ -50,27 +50,26 @@ public class ContactMessageConrtoller {
 
     @GetMapping("/page")
     public ResponseEntity<Page<ContactMessage>> getAllStudents(@RequestParam("page") int pageNo, //kaçıncı sayfayı görmek istiyorum.
-                                                        @RequestParam("size") int size,   //her sayfada kaç kayıt olacak
-                                                        @RequestParam("sort") String properties, //hangi özelliğer göre sıralama yapılacak
-                                                        @RequestParam("direction") Sort.Direction direction) { //sıralamanın yönü için sabit değişken
-
-        //Tüm parametreleri aldım ve artık Pageable oluşturabilirim.
-        //findAll metodunun sayfa getirmesi için gerekli olan bilgileri
-        //pageable tipinde verebiliriz.
+                                                               @RequestParam("size") int size,   //her sayfada kaç kayıt olacak
+                                                               @RequestParam("sort") String properties, //hangi özelliğer göre sıralama yapılacak
+                                                               @RequestParam("direction") Sort.Direction direction) { //sıralamanın yönü için sabit değişken
 
         Pageable pageable = PageRequest.of(pageNo, size, Sort.by(direction, properties));
-
         Page<ContactMessage> studentPage = contactMessageService.getAllContactMessagesByPage(pageable);
         return new ResponseEntity<>(studentPage, HttpStatus.OK); //200
     }
 
 
-
-
-
     //GET → Search contact messages by subject
     //(contains/LIKE parameter: {subject})
-    //
+
+    @GetMapping("/get/{subject}")
+    public ResponseEntity<List<ContactMessageResponse>> getContactMessageBySubject(@PathVariable String subject) {
+        List<ContactMessageResponse> messages = contactMessageService.getContactMessageBySubject(subject);
+        return ResponseEntity.ok(messages);
+    }
+
+
     //GET → Get contact messages by email
     //(parameter: {email})
     //
