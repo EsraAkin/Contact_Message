@@ -3,7 +3,6 @@ package com.techproeducation.backendproject.initialwork.payload.request;
 import com.techproeducation.backendproject.initialwork.dto.ContactMessageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 

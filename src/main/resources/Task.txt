@@ -1,0 +1,61 @@
+Back-end API Needed According to Entity Explained Below:
+Entity Name: ContactMessage
+
+Properties:
+Name
+Email
+Subject
+Message
+LocalDateTime
+
+Constraints:
+Properties cannot be null.
+Email property should be in email format.
+DateTime format should be like "yyyy-MM-dd hh:mm", timezone = "US"
+
+End-Points Needed:
+POST → Create contact messages.
+(Date-time will be created by back-end)
+
+GET → Get all contact messages
+
+GET → Get all contact messages by page
+(parameters: page, size, sort, type)
+
+GET → Search contact messages by subject
+(contains/LIKE parameter: {subject})
+
+GET → Get contact messages by email
+(parameter: {email})
+
+GET → Get contact messages by creation date
+(parameters: {startDate, endDate})
+(Find all contact messages between two dates, example: 01.01.2022 - 01.10.2023)
+
+GET → Get contact messages by creation time
+(parameters: {startTime, endTime})
+(Find all contact messages between two times, example: 10:30 - 22:00)
+
+DELETE → Delete by ID (path)
+
+DELETE → Delete by ID (parameter: {id})
+
+PUT → Update a contact message
+(Search by ID and update by body, only the properties that need to be updated will be sent)
+
+General Expectations:
+Return type must be ResponseEntity.
+All exceptions should be handled, and meaningful response messages should be implemented.
+DTO → DomainObject and DomainObject → DTO mappers are needed.
+Package Convention:
+markdown
+Kopyala
+Düzenle
+com.techproeducation.backendproject.initialwork
+    ├── controller
+    ├── dto
+    ├── entity
+    ├── exceptions
+    ├── mapper
+    ├── service
+    ├── repository

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,31 +25,29 @@ public class ContactMessageService {
 
     public ResponseMessage<ContactMessageResponse> createContactMessage(ContactMessageRequest contactMessageRequest) {
 
-    //uniq control
+        //uniq control
         uniqueValidator.checkDuplication(contactMessageRequest.getEmail());
         //DTO->Entity
-        ContactMessage contactMessageToSave=contactMessageMapper.mapContactMessageRequestToContactMessage(contactMessageRequest);
+        ContactMessage contactMessageToSave = contactMessageMapper.mapContactMessageRequestToContactMessage(contactMessageRequest);
         //save
-        ContactMessage savedContactMessage=contactMessageRepository.save(contactMessageToSave);
+        ContactMessage savedContactMessage = contactMessageRepository.save(contactMessageToSave);
         //Entity->DTO map
         return ResponseMessage.<ContactMessageResponse>builder()
                 .message("Kayıt başarılı")
                 .returnBody(contactMessageMapper.mapContactMessageToContactMessageResponse(savedContactMessage))
                 .httpStatus(HttpStatus.OK)
-                        .build();
+                .build();
 
-        /**
-         *  //DTO->entity mapping
-         *     User userToSave = userMapper.mapUserRequestToUser(userRequest,userRole);
-         *     //save operation
-         *     User savedUser = userRepository.save(userToSave);
-         *     //entity ->DTO mapping
-         *     return ResponseMessage.<UserResponse>builder()
-         *         .message(SuccessMessages.USER_CREATE)
-         *         .returnBody(userMapper.mapUserToUserResponse(savedUser))
-         *         .httpStatus(HttpStatus.OK)
-         *         .build();
-         */
 
+    }
+
+
+    public List<ContactMessageResponse> getAllContactMessages() {
+        List<ContactMessage> getAllContactMessages = contactMessageRepository.findAll();
+
+        // ContactMessage nesnelerini ContactMessageResponse nesnelerine çevir
+        return getAllContactMessages.stream()
+                .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
+                .collect(Collectors.toList());
     }
 }

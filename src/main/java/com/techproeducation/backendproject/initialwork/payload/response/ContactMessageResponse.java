@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContactMessageResponse extends ContactMessageDTO {
 
-    private Long id;
+    //private Long id;
     private String name;
     private String eMail;
     private String subject;
