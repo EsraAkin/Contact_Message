@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -84,15 +85,14 @@ public class ContactMessageConrtoller {
     //(parameters: {startDate, endDate})
     //(Find all contact messages between two dates, example: 01.01.2022 - 01.10.2023)
 
-    @GetMapping("date")
-    public ResponseEntity<List<ContactMessageResponse>> getContactMessagesTwoDateBetween(
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate) {
+    @GetMapping("/date")
+    public ResponseEntity<List<ContactMessageResponse>> getContactMessagesBetweenDates(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
-        List<ContactMessageResponse> contactMessages = contactMessageService.getContactMessageByDate(startDate, endDate);
-        return ResponseEntity.ok(contactMessages);
+        List<ContactMessageResponse> messages = contactMessageService.getContactMessageByDate(startDate, endDate);
+        return ResponseEntity.ok(messages);
     }
-
 
 
     //GET → Get contact messages by creation time
