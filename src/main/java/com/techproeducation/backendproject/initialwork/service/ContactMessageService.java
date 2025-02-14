@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,4 +86,21 @@ public class ContactMessageService {
                 .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
                 .collect(Collectors.toList());
     }
-}
+
+    public List<ContactMessageResponse> getContactMessageByTime(LocalTime startTime, LocalTime endTime) {
+            List<ContactMessage> messages = contactMessageRepository.findAll();
+
+            // `LocalTime` bazında filtreleme
+            List<ContactMessage> filteredMessages = messages.stream()
+                    .filter(msg -> {
+                        LocalTime messageTime = msg.getLocalDateTime().toLocalTime();
+                        return messageTime.isAfter(startTime) && messageTime.isBefore(endTime);
+                    })
+                    .collect(Collectors.toList());
+
+            return filteredMessages.stream()
+                    .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
+                    .collect(Collectors.toList());
+        }
+    }
+

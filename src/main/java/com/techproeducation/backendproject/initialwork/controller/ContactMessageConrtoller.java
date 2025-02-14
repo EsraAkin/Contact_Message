@@ -23,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -98,7 +99,20 @@ public class ContactMessageConrtoller {
     //GET → Get contact messages by creation time
     //(parameters: {startTime, endTime})
     //(Find all contact messages between two times, example: 10:30 - 22:00)
-    //
+
+    @GetMapping("/time")
+    public ResponseEntity<List<ContactMessageResponse>> getContactMessagesBetweenTimes(
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime startTime,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+
+        List<ContactMessageResponse> messages = contactMessageService.getContactMessageByTime(startTime, endTime);
+
+        return ResponseEntity.ok(messages);
+    }
+
+
+
+
     //DELETE → Delete by ID (path)
     //
     //DELETE → Delete by ID (parameter: {id})
