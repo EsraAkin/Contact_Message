@@ -68,4 +68,9 @@ public class ContactMessageService {
                 .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
                 .collect(Collectors.toList());
     }
+
+    public ContactMessageResponse getContactMessageByEmail(String email) {
+        ContactMessage contactMessage=contactMessageRepository.findByEmail(email);
+        return contactMessageMapper.mapContactMessageToContactMessageResponse(contactMessage);
+    }
 }

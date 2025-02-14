@@ -14,4 +14,5 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
 
     List<ContactMessage> findBySubject(String subject);
 
+    ContactMessage findByEmail(String email);
 }

@@ -63,16 +63,21 @@ public class ContactMessageConrtoller {
     //GET → Search contact messages by subject
     //(contains/LIKE parameter: {subject})
 
-    @GetMapping("/get/{subject}")
+    @GetMapping("/subject/{subject}")
     public ResponseEntity<List<ContactMessageResponse>> getContactMessageBySubject(@PathVariable String subject) {
         List<ContactMessageResponse> messages = contactMessageService.getContactMessageBySubject(subject);
         return ResponseEntity.ok(messages);
     }
 
-
     //GET → Get contact messages by email
     //(parameter: {email})
-    //
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ContactMessageResponse> getContactMessages(@PathVariable String email){
+        return ResponseEntity.ok(contactMessageService.getContactMessageByEmail(email));
+    }
+
+
     //GET → Get contact messages by creation date
     //(parameters: {startDate, endDate})
     //(Find all contact messages between two dates, example: 01.01.2022 - 01.10.2023)
