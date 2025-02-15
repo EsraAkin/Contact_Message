@@ -42,8 +42,6 @@ public class ContactMessageService {
                 .returnBody(contactMessageMapper.mapContactMessageToContactMessageResponse(savedContactMessage))
                 .httpStatus(HttpStatus.OK)
                 .build();
-
-
     }
 
 
@@ -73,8 +71,9 @@ public class ContactMessageService {
     }
 
     public ContactMessageResponse getContactMessageByEmail(String email) {
-        ContactMessage contactMessage=contactMessageRepository.findByEmail(email);
+        ContactMessage contactMessage = methodHelper.isContactMessageExistEmail(email);
         return contactMessageMapper.mapContactMessageToContactMessageResponse(contactMessage);
+
     }
 
     public List<ContactMessageResponse> getContactMessageByDate(LocalDate startDate, LocalDate endDate) {

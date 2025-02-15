@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContactMessageRepository extends JpaRepository<ContactMessage, Long> {
@@ -15,7 +16,8 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
 
     List<ContactMessage> findBySubject(String subject);
 
-    ContactMessage findByEmail(String email);
+    Optional<ContactMessage> findByEmail(String email);
+
 
     List<ContactMessage> findByLocalDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

@@ -1,7 +1,5 @@
 package com.techproeducation.backendproject.initialwork.controller;
 
-
-import com.techproeducation.backendproject.initialwork.dto.ContactMessageDTO;
 import com.techproeducation.backendproject.initialwork.entity.ContactMessage;
 import com.techproeducation.backendproject.initialwork.payload.request.ContactMessageRequest;
 import com.techproeducation.backendproject.initialwork.payload.response.ContactMessageResponse;
@@ -18,11 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -122,11 +119,6 @@ public class ContactMessageConrtoller {
     public ResponseEntity<ContactMessageResponse> deletedByIdParam(@RequestParam Long id) {
         return ResponseEntity.ok(contactMessageService.deleteContactMessageById(id));
     }
-
-
-
-
-
 
     //PUT → Update a contact message
     //(Search by ID and update by body, only the properties that need to be updated will be sent)
