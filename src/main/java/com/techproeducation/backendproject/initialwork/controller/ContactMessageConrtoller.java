@@ -112,13 +112,22 @@ public class ContactMessageConrtoller {
 
     //DELETE → Delete by ID (path)
     @DeleteMapping("deleteContactMessageById/{id}")
-    public ResponseEntity<ContactMessageResponse>deletedById(@PathVariable Long id){
+    public ResponseEntity<ContactMessageResponse>deletedByIdPath(@PathVariable Long id){
         return ResponseEntity.ok( contactMessageService.deleteContactMessageById(id));
     }
 
 
     //DELETE → Delete by ID (parameter: {id})
-    //
+    @DeleteMapping("delete")
+    public ResponseEntity<ContactMessageResponse> deletedByIdParam(@RequestParam Long id) {
+        return ResponseEntity.ok(contactMessageService.deleteContactMessageById(id));
+    }
+
+
+
+
+
+
     //PUT → Update a contact message
     //(Search by ID and update by body, only the properties that need to be updated will be sent)
 
