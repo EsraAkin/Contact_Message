@@ -1,18 +1,20 @@
 package com.techproeducation.backendproject.initialwork.service;
 
-import com.techproeducation.backendproject.initialwork.dto.ContactMessageDTO;
 import com.techproeducation.backendproject.initialwork.entity.ContactMessage;
 import com.techproeducation.backendproject.initialwork.mapper.ContactMessageMapper;
 import com.techproeducation.backendproject.initialwork.payload.request.ContactMessageRequest;
 import com.techproeducation.backendproject.initialwork.payload.response.ContactMessageResponse;
 import com.techproeducation.backendproject.initialwork.payload.response.ResponseMessage;
 import com.techproeducation.backendproject.initialwork.repository.ContactMessage.ContactMessageRepository;
+import com.techproeducation.backendproject.initialwork.service.helper.ContactMessageUpdateHelper;
+import com.techproeducation.backendproject.initialwork.service.helper.MethodHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,6 +29,7 @@ public class ContactMessageService {
     private final ContactMessageMapper contactMessageMapper;
     private final ContactMessageRepository contactMessageRepository;
     private final MethodHelper methodHelper;
+    private final ContactMessageUpdateHelper updateHelper;
 
     public ResponseMessage<ContactMessageResponse> createContactMessage(ContactMessageRequest contactMessageRequest) {
 
@@ -112,5 +115,34 @@ public class ContactMessageService {
         // Silinen mesajın bilgilerini response olarak döndür
         return contactMessageMapper.mapContactMessageToContactMessageResponse(contactMessage);
     }
+
+
+    public ResponseMessage<ContactMessageResponse> updateContactMessageById(
+            ContactMessageRequest contactMessageRequest, Long messageId) {
+
+
+        // Mevcut mesajı veritabanından getir
+        ContactMessage contactMessageDb = methodHelper.isContactMessageExist(messageId);
+
+        // Güncelleme izinleri kontrol et
+        methodHelper.checkBuildIn(contactMessageDb);
+        uniqueValidator.checkUniqueProperty(contactMessageDb, contactMessageRequest);
+
+        // **Sadece değiştirilen alanları güncelle**
+        updateHelper.updateContactMessageFields(contactMessageDb, contactMessageRequest);
+
+        // Güncellenmiş mesajı kaydet
+        ContactMessage savedMessage = contactMessageRepository.save(contactMessageDb);
+
+        // Response döndür
+        return ResponseMessage.<ContactMessageResponse>builder()
+                .message("Mesaj başarıyla güncellendi")
+                .returnBody(contactMessageMapper.mapContactMessageToContactMessageResponse(savedMessage))
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
+
+
 }
+
 

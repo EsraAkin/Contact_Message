@@ -123,4 +123,11 @@ public class ContactMessageConrtoller {
     //PUT → Update a contact message
     //(Search by ID and update by body, only the properties that need to be updated will be sent)
 
+    @PutMapping("/update/{messageId}")
+    public ResponseMessage<ContactMessageResponse> updateMessageById(
+            @RequestBody ContactMessageRequest contactMessageRequest,
+            @PathVariable Long messageId) {
+        return contactMessageService.updateContactMessageById(contactMessageRequest, messageId);
+    }
+
 }

@@ -1,14 +1,12 @@
-package com.techproeducation.backendproject.initialwork.service;
+package com.techproeducation.backendproject.initialwork.service.helper;
 
 import com.techproeducation.backendproject.initialwork.entity.ContactMessage;
+import com.techproeducation.backendproject.initialwork.exceptions.BadRequestException;
 import com.techproeducation.backendproject.initialwork.exceptions.ResourceNotFoundException;
 import com.techproeducation.backendproject.initialwork.mapper.ContactMessageMapper;
-import com.techproeducation.backendproject.initialwork.payload.response.ContactMessageResponse;
 import com.techproeducation.backendproject.initialwork.repository.ContactMessage.ContactMessageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +23,12 @@ public class MethodHelper {
     public ContactMessage isContactMessageExistEmail(String email) {
         return contactMessageRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found with email: " + email));
+    }
+
+    public void checkBuildIn(ContactMessage contactMessage) {
+        if (contactMessage.getBuildIn() != null && contactMessage.getBuildIn()) {
+            throw new IllegalStateException("This contact message cannot be updated.");
+        }
     }
 
 
