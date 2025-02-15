@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -123,25 +122,20 @@ public class ContactMessageService {
 
         // Mevcut mesajı veritabanından getir
         ContactMessage contactMessageDb = methodHelper.isContactMessageExist(messageId);
-
         // Güncelleme izinleri kontrol et
         methodHelper.checkBuildIn(contactMessageDb);
         uniqueValidator.checkUniqueProperty(contactMessageDb, contactMessageRequest);
-
         // **Sadece değiştirilen alanları güncelle**
         updateHelper.updateContactMessageFields(contactMessageDb, contactMessageRequest);
-
         // Güncellenmiş mesajı kaydet
         ContactMessage savedMessage = contactMessageRepository.save(contactMessageDb);
-
-        // Response döndür
+        // return response
         return ResponseMessage.<ContactMessageResponse>builder()
                 .message("Mesaj başarıyla güncellendi")
                 .returnBody(contactMessageMapper.mapContactMessageToContactMessageResponse(savedMessage))
                 .httpStatus(HttpStatus.OK)
                 .build();
     }
-
 
 }
 

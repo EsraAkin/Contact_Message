@@ -1,7 +1,6 @@
 package com.techproeducation.backendproject.initialwork.service.helper;
 
 import com.techproeducation.backendproject.initialwork.entity.ContactMessage;
-import com.techproeducation.backendproject.initialwork.exceptions.BadRequestException;
 import com.techproeducation.backendproject.initialwork.exceptions.ResourceNotFoundException;
 import com.techproeducation.backendproject.initialwork.mapper.ContactMessageMapper;
 import com.techproeducation.backendproject.initialwork.repository.ContactMessage.ContactMessageRepository;
@@ -30,8 +29,6 @@ public class MethodHelper {
             throw new IllegalStateException("This contact message cannot be updated.");
         }
     }
-
-
 
 }
 

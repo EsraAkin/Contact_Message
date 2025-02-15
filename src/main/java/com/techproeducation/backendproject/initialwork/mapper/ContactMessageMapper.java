@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 public class ContactMessageMapper {
 
 
-
     public ContactMessage mapContactMessageRequestToContactMessage(ContactMessageRequest contactMessageRequest){
         ContactMessage contactMessage=ContactMessage.builder()
                 .message(contactMessageRequest.getMessage())

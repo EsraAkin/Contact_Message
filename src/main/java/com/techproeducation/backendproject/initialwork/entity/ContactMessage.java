@@ -28,7 +28,6 @@ public class ContactMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private Boolean buildIn;
 
     @Column(nullable = false)

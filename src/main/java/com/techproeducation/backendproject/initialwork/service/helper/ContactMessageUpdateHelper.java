@@ -4,9 +4,10 @@ import com.techproeducation.backendproject.initialwork.entity.ContactMessage;
 import com.techproeducation.backendproject.initialwork.payload.request.ContactMessageRequest;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class ContactMessageUpdateHelper {
+
+        //null girilen değerler için mevcut değer kalmasını istiyoruz.
 
     public void updateContactMessageFields(ContactMessage contactMessageDb, ContactMessageRequest contactMessageRequest) {
         if (contactMessageRequest.getName() != null && !contactMessageRequest.getName().isEmpty()) {
