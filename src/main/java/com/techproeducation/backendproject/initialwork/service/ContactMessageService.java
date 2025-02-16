@@ -82,12 +82,13 @@ public class ContactMessageService {
         LocalDateTime startDateTime = startDate.atStartOfDay(); // 00:00:00
         LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // 23:59:59
 
-        List<ContactMessage> messages = contactMessageRepository.findByLocalDateTimeBetween(startDateTime, endDateTime);
+        List<ContactMessage> messages = contactMessageRepository.findMessagesBetweenDates(startDateTime, endDateTime);
 
         return messages.stream()
                 .map(contactMessageMapper::mapContactMessageToContactMessageResponse)
                 .collect(Collectors.toList());
     }
+
 
     public List<ContactMessageResponse> getContactMessageByTime(LocalTime startTime, LocalTime endTime) {
             List<ContactMessage> messages = contactMessageRepository.findAll();

@@ -1,7 +1,7 @@
 package com.techproeducation.backendproject.initialwork.payload.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.techproeducation.backendproject.initialwork.dto.ContactMessageDTO;
+import com.techproeducation.backendproject.initialwork.payload.dto.ContactMessageDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

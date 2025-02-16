@@ -1,4 +1,4 @@
-package com.techproeducation.backendproject.initialwork.dto;
+package com.techproeducation.backendproject.initialwork.payload.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;

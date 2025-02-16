@@ -29,9 +29,9 @@ public class UniqueValidator {
         }
     }
 
-    public void checkDuplication(String eMail) {
-        if(contactMessageRepository.existsByEmail(eMail)) {
-            throw new ConflictException("Email is allready exist!");
+    public void checkDuplication(String email) {
+        if (contactMessageRepository.existsByEmail(email)) {
+            throw new ConflictException("Email allready exist!: " + email);
         }
     }
 
